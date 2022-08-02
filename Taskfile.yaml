@@ -1,12 +1,58 @@
+---
 # https://taskfile.dev
-
 version: '3'
 
 vars:
-  GREETING: Hello, World!
+  PANDOC: pandoc.sh
 
 tasks:
   default:
+    deps:
+      - pandoc-pdf-ms
+      - pandoc-pdf-latex
+      - pandoc-docx
+      - pandoc-beamer
+      - pandoc-revealjs
+      - pandoc-revealjs-aio
+      - pandoc-html
+
+  podman-build:
+    desc: Use Podman to build the container image
     cmds:
-      - echo "{{.GREETING}}"
-    silent: true
+      - podman build -t localhost/pandoctexlivegroff:latest -f containerfiles/pandoc_texlive_groff.containerfile .
+
+  pandoc-pdf-ms:
+    desc: Use Pandoc and Groff to generate a PDF from Markdown
+    cmds:
+      - "{{.PANDOC}} --to ms --output output/pdf/schedule_slides_ms.pdf src/schedule_slides.md"
+
+  pandoc-pdf-latex:
+    desc: Use Pandoc and LaTeX to generate a PDF from Markdown
+    cmds:
+      - "{{.PANDOC}} --output output/pdf/schedule_slides_latex.pdf src/schedule_slides.md"
+
+  pandoc-docx:
+    desc: Use Pandoc to create a DOCX file from Markdown
+    cmds:
+      - "{{.PANDOC}} --output output/docx/schedule_slides.docx src/schedule_slides.md"
+
+  pandoc-beamer:
+    desc: Use Pandoc to create Beamer slides from Markdown using LaTeX
+    cmds:
+      - "{{.PANDOC}} --to beamer --output output/pdf/schedule_slides_beamer.pdf src/schedule_slides.md"
+
+  pandoc-revealjs:
+    desc: Use Pandoc and Reveal.js to create HTML Slides from Markdown. Requires reveal.js
+    cmds:
+      - "{{.PANDOC}} --to revealjs --standalone --output output/html/schedule_slides_revealjs.html src/schedule_slides.md"
+
+  pandoc-revealjs-aio:
+    desc: Same as pandoc-revealjs but all-in-one
+    cmds:
+      - "{{.PANDOC}} --to revealjs --standalone --self-contained --output output/html/schedule_slides_revealjs_aio.html src/schedule_slides.md"
+
+  pandoc-html:
+    desc: Use Pandoc to create a HTML5 page from Markdown
+    cmds:
+      - "{{.PANDOC}} --output output/html/schedule_slides.html src/schedule_slides.md"
+...
