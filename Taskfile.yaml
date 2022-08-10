@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  PANDOC: pandoc.sh
+  PANDOC: pandoc
 
 tasks:
   default:
@@ -55,4 +55,9 @@ tasks:
     desc: Use Pandoc to create a HTML5 page from Markdown
     cmds:
       - "{{.PANDOC}} --output output/html/schedule_slides.html src/schedule_slides.md"
+
+  pandoc-w3css:
+    desc: Use Pandoc to create HTML from Markdown using w3css
+    cmds:
+      - "{{.PANDOC}} --css=https://www.w3schools.com/w3css/4/w3.css --css=src/templates/css/pandoc_html_css_template.css --template=src/templates/html/pandoc_html_template.html --toc --self-contained --standalone --output=output/html/lorem_ipsum.html src/lorem_ipsum_20para.md src/metadata.yaml"
 ...

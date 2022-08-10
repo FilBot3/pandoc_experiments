@@ -1,0 +1,28 @@
+h2 {
+  text-indent: 5px;
+  color: teal;
+}
+
+h3 {
+  text-indent: 15px;
+  color: blue;
+}
+
+h4 {
+  text-indent: 25px;
+  color: red;
+}
+
+h5 {
+  text-indent: 35px;
+  color: green;
+}
+
+h6 {
+  text-indent: 45px;
+  color: orange;
+}
+
+p {
+  text-indent: 55px;
+}

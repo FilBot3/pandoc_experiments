@@ -1,0 +1,10 @@
+---
+title: Lorem Ipsum
+author:
+  - Phillip Dudley
+keywords:
+  - Lorem
+  - Ipsum
+abstract: |
+  This is an example of how to use Pandoc, HTML Templates and custom CSS.
+...
